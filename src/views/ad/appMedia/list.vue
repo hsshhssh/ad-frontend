@@ -48,17 +48,17 @@
                 </template>
             </el-table-column>
 
-            <el-table-column align="center" label="扣量初始值" width="130">
-                <template scope="scope">
-                    <span>{{scope.row.startCount}}</span>
-                </template>
-            </el-table-column>
+            <!--<el-table-column align="center" label="扣量初始值" width="130">-->
+                <!--<template scope="scope">-->
+                    <!--<span>{{scope.row.startCount}}</span>-->
+                <!--</template>-->
+            <!--</el-table-column>-->
 
-            <el-table-column align="center" label="回调率" width="100">
-                <template scope="scope">
-                    <span>{{scope.row.discountRate}}</span>
-                </template>
-            </el-table-column>
+            <!--<el-table-column align="center" label="回调率" width="100">-->
+                <!--<template scope="scope">-->
+                    <!--<span>{{scope.row.discountRate}}</span>-->
+                <!--</template>-->
+            <!--</el-table-column>-->
 
             <el-table-column align="center" label="秘钥" width="100">
                 <template scope="scope">
@@ -103,13 +103,13 @@
                     </el-select>
                 </el-form-item>
 
-                <el-form-item label="扣量初始值">
-                    <el-input v-model="temp.startCount"></el-input>
-                </el-form-item>
+                <!--<el-form-item label="扣量初始值">-->
+                    <!--<el-input v-model="temp.startCount"></el-input>-->
+                <!--</el-form-item>-->
 
-                <el-form-item label="回调率">
-                    <el-input v-model="temp.discountRate"></el-input>
-                </el-form-item>
+                <!--<el-form-item label="回调率">-->
+                    <!--<el-input v-model="temp.discountRate"></el-input>-->
+                <!--</el-form-item>-->
 
                 <el-form-item label="秘钥">
                     <el-input v-model="temp.appKey"></el-input>
