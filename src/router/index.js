@@ -81,6 +81,7 @@ const Introduction = resolve => require(['../views/introduction/index'], resolve
 const AppMediaList = resolve => require(['../views/ad/appMedia/list'], resolve);
 const AppList = resolve => require(['../views/ad/app/list'], resolve);
 const MediaList = resolve => require(['../views/ad/media/list'], resolve);
+const DownloadBi = resolve => require(['../views/ad/download/bi'], resolve);
 
 Vue.use(Router);
 
@@ -272,13 +273,13 @@ export const asyncRouterMap = [
       component: Layout,
       redirect: 'noredirect',
       name: '广告平台管理',
-      meta: { role: ['admin, adUser'] },
+      meta: { role: ['admin', 'adUser'] },
       icon: 'tubiaoleixingzhengchang',
       children: [
           { path: 'app', component: AppList, name: '应用管理' },
           { path: 'media', component: MediaList, name: '媒体管理' },
           { path: 'appMedia', component: AppMediaList, name: '推广应用' },
-          { path: 'download', component: Err404, name: '下载管理' }
+          { path: 'download', component: DownloadBi, name: '下载管理' }
       ]
   },
   { path: '*', redirect: '/404', hidden: true }
