@@ -3,7 +3,7 @@
         <a href="https://das.base.shuju.aliyun.com/token3rd/shulaibao/preview.htm?pageId=35ee29eb-1833-4ba2-ae52-825eebbe66a5&accessToken=0268c3e55f86c8ede02e0a73d51023ac#dda4db35-025c-47dd-b746-b3a4c2ad120d*=*{'currentInx':0}" target="_blank" >
             <h2 style="text-decoration: underline">点击跳转到下载报表</h2>
         </a>
-        <a href="https://das.base.shuju.aliyun.com/token3rd/shulaibao/preview.htm?pageId=35ee29eb-1833-4ba2-ae52-825eebbe66a5&accessToken=0268c3e55f86c8ede02e0a73d51023ac#dda4db35-025c-47dd-b746-b3a4c2ad120d*=*{'currentInx':0}" target="_blank" v-if="isAdmin">
+        <a href="https://das.base.shuju.aliyun.com/token3rd/dashboard/view/pc.htm?pageId=00f7c27f-6a1e-419c-8c96-8517dce8ab69&accessToken=739872c743d92cf5f89c2579ad289d9e&from=message&isappinstalled=0" target="_blank" v-if="isAdmin">
             <h2 style="text-decoration: underline">点击跳转到下载报表2</h2>
         </a>
 
