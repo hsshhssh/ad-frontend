@@ -63,19 +63,24 @@ const Introduction = resolve => require(['../views/introduction/index'], resolve
 
 
 /* 支付平台 */
-const PayOrder = resolve => require(['../views/financial/pay/order'], resolve);
-const FailCallback = resolve => require(['../views/financial/pay/failCallback'], resolve);
-const UserSettlement = resolve => require(['../views/financial/pay/userSettlement'], resolve);
+// const PayOrder = resolve => require(['../views/financial/pay/order'], resolve);
+// const FailCallback = resolve => require(['../views/financial/pay/failCallback'], resolve);
+// const UserSettlement = resolve => require(['../views/financial/pay/userSettlement'], resolve);
 
 /* 应用管理 */
-const AppList = resolve => require(['../views/financial/app/list'], resolve);
-const Settlement = resolve => require(['../views/financial/app/settlement'], resolve);
-const RealTimeData = resolve => require(['../views/financial/app/realTimeData'], resolve);
-const MonthSettlement = resolve => require(['../views/financial/app/monthSettlement'], resolve);
+// const AppList = resolve => require(['../views/financial/app/list'], resolve);
+// const Settlement = resolve => require(['../views/financial/app/settlement'], resolve);
+// const RealTimeData = resolve => require(['../views/financial/app/realTimeData'], resolve);
+// const MonthSettlement = resolve => require(['../views/financial/app/monthSettlement'], resolve);
 
 /* 运营管理 */
-const UserList = resolve => require(['../views/financial/operation/user'], resolve);
+// const UserList = resolve => require(['../views/financial/operation/user'], resolve);
 
+
+/*广告平台*/
+const AppMediaList = resolve => require(['../views/ad/appMedia/list'], resolve);
+const AppList = resolve => require(['../views/ad/app/list'], resolve);
+const MediaList = resolve => require(['../views/ad/media/list'], resolve);
 
 Vue.use(Router);
 
@@ -262,5 +267,19 @@ export const asyncRouterMap = [
   //           { path: 'role', component: Err404, name: '角色管理' }
   //       ]
   //   },
+  {
+      path: '/ad/operation',
+      component: Layout,
+      redirect: 'noredirect',
+      name: '广告平台管理',
+      meta: { role: ['admin, adUser'] },
+      icon: 'tubiaoleixingzhengchang',
+      children: [
+          { path: 'app', component: AppList, name: '应用管理' },
+          { path: 'media', component: MediaList, name: '媒体管理' },
+          { path: 'appMedia', component: AppMediaList, name: '推广应用' },
+          { path: 'download', component: Err404, name: '下载管理' }
+      ]
+  },
   { path: '*', redirect: '/404', hidden: true }
 ];

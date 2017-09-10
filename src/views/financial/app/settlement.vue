@@ -280,7 +280,7 @@
             }, {});
           })
         },
-        getUserList() {
+        getAppList() {
             userListNoPage().then(response => {
                 if (response.status === 200) {
                     this.userIdOptions.push({ key: null, display_name: '全部' })

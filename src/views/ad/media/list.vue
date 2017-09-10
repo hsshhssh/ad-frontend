@@ -3,64 +3,30 @@
 
         <!-- 搜索区域 -->
         <div class="filter-container">
-            <el-input @keyup.enter.native="handleFilter" style="width: 100px;" class="filter-item" placeholder="应用ID" v-model="listQuery.search.id_eq">
-            </el-input>
-
-            <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="应用名称" v-model="listQuery.search.appName_like">
+            <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="媒体名称" v-model="listQuery.search.name_like">
             </el-input>
 
 
-            <el-select clearable class="filter-item" style="width: 130px" v-model="listQuery.search.userId_eq" placeholder="商户" v-if="isAdminRole">
-                <el-option v-for="item in userIdOptions" :key="item.key" :label="item.display_name" :value="item.key">
-                </el-option>
-            </el-select>
-
-            <el-input @keyup.enter.native="handleFilter" style="width: 250px;" class="filter-item" placeholder="秘钥" v-model="listQuery.search.secretkey_eq">
-            </el-input>
         </div>
 
 
         <div class="filter-container">
             <el-button class="filter-item" type="primary" v-waves icon="search" @click="handleFilter">搜索</el-button>
-            <el-button class="filter-item" type="primary" icon="document" @click="handleDownload">导出</el-button>
+            <!--<el-button class="filter-item" type="primary" icon="document" @click="handleDownload">导出</el-button>-->
             <el-button class="filter-item" type="primary" icon="plus" @click="handleCreate">添加</el-button>
         </div>
 
         <!-- 列表 -->
         <el-table  :key='tableKey' :data="list" v-loading.body="listLoading" border fit highlight-current-row style="width: 100%">
-            <el-table-column align="center" label="应用ID" width="90">
+            <el-table-column align="center" label="ID" width="80">
                 <template scope="scope">
                     <span>{{scope.row.id}}</span>
                 </template>
             </el-table-column>
 
-            <el-table-column align="center" label="商户名称" width="250">
+            <el-table-column align="center" label="媒体名称" width="200">
                 <template scope="scope">
-                    <span>{{scope.row.userName}}</span>
-                </template>
-            </el-table-column>
-
-            <el-table-column align="center" label="应用名称" width="100">
-                <template scope="scope">
-                    <span>{{scope.row.appName}}</span>
-                </template>
-            </el-table-column>
-
-            <el-table-column align="center" label="回调地址" width="200">
-                <template scope="scope">
-                    <span>{{scope.row.callbackUrl}}</span>
-                </template>
-            </el-table-column>
-
-            <el-table-column align="center" label="返回地址" width="200">
-                <template scope="scope">
-                    <span>{{scope.row.nodifyUrl}}</span>
-                </template>
-            </el-table-column>
-
-            <el-table-column align="center" label="秘钥" width="200">
-                <template scope="scope">
-                    <span>{{scope.row.secretkey}}</span>
+                    <span>{{scope.row.name}}</span>
                 </template>
             </el-table-column>
 
@@ -87,28 +53,11 @@
 
         <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
             <el-form class="small-space" :model="temp" label-position="left" label-width="70px" style='width: 400px; margin-left:50px;' ref="tempForm">
-                <el-form-item label="商户名称">
-                    <el-select clearable class="filter-item" style="width: 130px" v-model="temp.userId" :disabled="!isAdminRole || dialogStatus=='update'">
-                        <el-option v-for="item in userIdOptionsWithoutAll" :key="item.key" :label="item.display_name" :value="item.key">
-                        </el-option>
-                    </el-select>
+
+                <el-form-item label="媒体名称">
+                    <el-input v-model="temp.name"></el-input>
                 </el-form-item>
 
-                <el-form-item label="应用名称">
-                    <el-input v-model="temp.appName"></el-input>
-                </el-form-item>
-
-                <el-form-item label="回调地址">
-                    <el-input v-model="temp.callbackUrl"></el-input>
-                </el-form-item>
-
-                <el-form-item label="返回地址">
-                    <el-input v-model="temp.nodifyUrl"></el-input>
-                </el-form-item>
-
-                <el-form-item label="秘钥" v-if="dialogStatus=='update'">
-                    <el-input v-model="temp.secretkey" :disabled="true"></el-input>
-                </el-form-item>
 
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -127,10 +76,13 @@
     import { parseTime, objectMerge } from 'utils';
     import store from 'store';
 
-    import { Message } from 'element-ui';
-    import { appList, appCreate, appUpdate } from 'api/financial/app_list'
-    import { userListNoPage } from 'api/financial/user'
     import { getUidWithUndefined, isAdminRole } from 'src/utils/permission.js'
+
+    import { Message } from 'element-ui';
+    import { appListNoPage } from 'api/ad/app'
+    import { mediaListNoPage, mediaList, mediaCreate, mediaUpdate } from 'api/ad/media'
+    import { appMediaList, appMediaCreate, appMediaUpdate } from 'api/ad/appMedia'
+
 
     export default {
         name: 'table_demo',
@@ -145,7 +97,8 @@
                     page: 1,
                     limit: 10,
                     search: {
-                        userId_eq: undefined
+                        appId_eq: undefined,
+                        mediaId_eq: undefined
                     }
                 },
                 tableKey: 0,
@@ -156,14 +109,18 @@
                     create: '添加'
                 },
                 temp: {
-                    userId: undefined
+                    appId: undefined,
+                    mediaId: undefined
                 },
-                userIdOptions: [],
-                userIdOptionsWithoutAll: []
+                appIdOptions: [],
+                appIdOptionsWithoutAll: [],
+                mediaIdOptions: [],
+                mediaIdOptionsWithoutAll: []
             }
         },
         created() {
-            this.getUserList()
+//            this.getAppList();
+//            this.getMediaList();
             this.getList();
         },
         filters: {
@@ -186,31 +143,12 @@
                 let size = this.listQuery.limit;
                 let search = this.listQuery.search;
 
-                // 处理商户
-                if ( typeof(this.listQuery.search.userId_eq) === 'undefined' && this.listQuery.search.userId_eq !== 0) {
-                    this.listQuery.search.userId_eq = getUidWithUndefined()
-                }
-
-
-
-                appList(search, page, size).then(response => {
+                mediaList(search, page, size).then(response => {
                     this.list = response.data.list
                     this.total = response.data.total
                     this.listLoading = false;
                 })
 
-            },
-            getAppList() {
-                userListNoPage().then(response => {
-                    if (response.status === 200) {
-                        this.userIdOptions.push({ key: null, display_name: '全部' })
-                        response.data.list.forEach(u => {
-                            this.userIdOptions.push({ key: u.id, display_name: u.name })
-                            this.userIdOptionsWithoutAll.push({ key: u.id, display_name: u.name })
-                        })
-
-                    }
-                })
             },
             // 点击搜索按钮事件
             handleFilter() {
@@ -235,7 +173,7 @@
             },
             update() {
                 console.log(this.temp);
-                appUpdate(this.temp).then(response => {
+                mediaUpdate(this.temp).then(response => {
                     if (response.data === 1) {
                         Message({
                             message: '修该成功',
@@ -258,15 +196,13 @@
 
             // 添加
             handleCreate() {
-                this.temp = {
-                    userId: getUidWithUndefined()
-                }
+                this.temp = {}
                 this.dialogStatus = 'create';
                 this.dialogFormVisible = true;
             },
             create() {
-                appCreate(this.temp).then(response => {
-                    if (response.data === 1) {
+                mediaCreate(this.temp).then(response => {
+                    if (response.data > 0) {
                         Message({
                             message: '创建成功',
                             type: 'success',
