@@ -6,7 +6,7 @@
             <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="应用名称" v-model="listQuery.search.name_like">
             </el-input>
 
-            <el-select clearable class="filter-item" style="width: 130px" v-model="listQuery.search.mediaId_eq" placeholder="联盟">
+            <el-select clearable class="filter-item" style="width: 130px" v-model="listQuery.search.leagueId_eq" placeholder="联盟">
                 <el-option v-for="item in leagueIdOptions" :key="item.key" :label="item.display_name" :value="item.key">
                 </el-option>
             </el-select>
