@@ -1,25 +1,25 @@
 <template>
   <div class="components-container" style='height:100vh'>
     <div class='chart-container'>
-      <mix-chart height='100%' width='100%'></mix-chart>
+       <mixchart id='apple' height='100%' width='100%' />
     </div>
+
   </div>
 </template>
-
 <script>
-import mixChart from '@/components/Charts/mixChart'
+    import mixchart from 'components/Charts/mixchart';
 
-export default {
-  components: { mixChart }
-}
+    export default {
+      components: { mixchart }
+    };
 </script>
 
 <style scoped>
 .chart-container{
-  position: relative;
-  width: 100%;
-  height: 90%;
-  padding-bottom: 40px;
+    position: relative;
+    width: 100%;
+    height: 90%;
+    padding-bottom: 40px;
 }
 </style>
 

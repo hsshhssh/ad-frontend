@@ -50,12 +50,8 @@ Join the group on QQ 591724180.
 - Multi-environments distribution
 - Dashboard
 - Two-factor authentication
-- Collapsing sidebar (support nested routes)
+- Collapsing sidebar
 - Mock data
-- cache tabs example
-- screenfull
-- markdown2html
-- views-tab
 
 ## Development
 
@@ -105,6 +101,7 @@ npm run build:prod
 │   ├── App.vue                // entry view
 │   └── main.js                // entry for loading components, initialization
 ├── static                     // third-party libraries not packed with Webpack
+│   ├── jquery
 │   └── Tinymce                // rich text
 ├── .babelrc                   // babel-loader config
 ├── eslintrc.js                // eslint config
@@ -113,9 +110,6 @@ npm run build:prod
 ├── index.html                 // html template
 └── package.json               // package.json
 ```
-
-## Changelog
-Detailed changes for each release are documented in the [release notes](https://github.com/PanJiaChen/vue-element-admin/releases).
 
 ## State Management
 
@@ -130,10 +124,6 @@ Only status of user and app configuration is managed by Vuex. Other data are man
 #### Realtime switching themes
 
 ![](https://github.com/PanJiaChen/vue-element-admin/blob/master/gifs/theme.gif)
-
-#### tabs
-
-![tabs](https://github.com/PanJiaChen/vue-element-admin/blob/master/gifs/tabs.gif)<br />
 
 #### Collapsing sidebar
 
