@@ -35,3 +35,10 @@ export function appMediaUpdate(body) {
         data: bodyCopy
     })
 }
+
+export function getTestUrl(id) {
+    return fetch({
+        url: '/xqh/ad/appMedia/test/url?id=' + id,
+        method: 'get'
+    })
+}

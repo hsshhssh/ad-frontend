@@ -72,9 +72,11 @@
                 </template>
             </el-table-column>
 
-            <el-table-column  align="center" label="操作" width="100">
+            <el-table-column  align="center" label="操作" width="200">
                 <template scope="scope">
                     <el-button size="small" type="success" @click="handleUpdate(scope.row)">编辑
+                    </el-button>
+                    <el-button size="small" type="primary" @click="handleTestUrl(scope.row.id)">测试url
                     </el-button>
                 </template>
             </el-table-column>
@@ -138,7 +140,7 @@
     import { Message } from 'element-ui';
     import { appListNoPage } from 'api/ad/app'
     import { mediaListNoPage } from 'api/ad/media'
-    import { appMediaList, appMediaCreate, appMediaUpdate } from 'api/ad/appMedia'
+    import { appMediaList, appMediaCreate, appMediaUpdate, getTestUrl } from 'api/ad/appMedia'
 
 
     export default {
@@ -297,6 +299,16 @@
                             message: '创建失败',
                             type: 'warning',
                             duration: 2000
+                        });
+                    }
+                })
+            },
+
+            handleTestUrl(id) {
+                getTestUrl(id).then(response => {
+                    if (response.status == 200) {
+                        this.$alert(response.data, '测试url', {
+                            confirmButtonText: '确定'
                         });
                     }
                 })
