@@ -105,7 +105,7 @@
 
 
                 <el-form-item label="上报方式">
-                    <el-select clearable class="filter-item" style="width: 130px" v-model="temp.reportType" :disabled=" dialogStatus=='update'">
+                    <el-select clearable class="filter-item" style="width: 130px" v-model="temp.reportType">
                         <el-option v-for="item in reportTypeOptionsWithoutAll" :key="item.key" :label="item.display_name" :value="item.key">
                         </el-option>
                     </el-select>
@@ -253,7 +253,7 @@
             update() {
                 console.log(this.temp);
                 appUpdate(this.temp).then(response => {
-                    if (response.data === 1) {
+                    if (response.data > 0) {
                         Message({
                             message: '修该成功',
                             type: 'success',
@@ -269,8 +269,6 @@
                         });
                     }
                 })
-
-                this.dialogFormVisible = false;
             },
 
             // 添加
