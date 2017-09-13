@@ -11,6 +11,11 @@
                 </el-option>
             </el-select>
 
+            <el-select clearable class="filter-item" style="width: 150px" v-model="listQuery.search.reportType_eq" placeholder="跳转方式">
+                <el-option v-for="item in reportTypeOptions" :key="item.key" :label="item.display_name" :value="item.key">
+                </el-option>
+            </el-select>
+
         </div>
 
 
@@ -45,6 +50,20 @@
                     <span>{{scope.row.leagueUrl}}</span>
                 </template>
             </el-table-column>
+
+            <el-table-column align="center" label="上报方式" width="100">
+                <template scope="scope">
+                    <span>{{scope.row.reportTypeStr}}</span>
+                </template>
+            </el-table-column>
+
+            <el-table-column align="center" label="下载跳转地址" width="250">
+                <template scope="scope">
+                    <span>{{scope.row.redirectUrl}}</span>
+                </template>
+            </el-table-column>
+
+
 
             <el-table-column align="center" label="创建时间" width="160">
                 <template scope="scope">
@@ -85,6 +104,18 @@
                 </el-form-item>
 
 
+                <el-form-item label="上报方式">
+                    <el-select clearable class="filter-item" style="width: 130px" v-model="temp.reportType" :disabled=" dialogStatus=='update'">
+                        <el-option v-for="item in reportTypeOptionsWithoutAll" :key="item.key" :label="item.display_name" :value="item.key">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+
+                <el-form-item label=下载跳转地址>
+                    <el-input v-model="temp.redirectUrl"></el-input>
+                </el-form-item>
+
+
 
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -109,6 +140,15 @@
     import { appList, appCreate, appUpdate } from 'api/ad/app'
     import { leagueListNoPage } from 'api/ad/league'
 
+    const reportTypeOptions = [
+        { key: null, display_name: '全部' },
+        { key: 1, display_name: '302(一个地址)' },
+        { key: 2, display_name: 's2s(两个地址)' }
+    ]
+    const reportTypeOptionsWithoutAll = [
+        { key: 1, display_name: '302(一个地址)' },
+        { key: 2, display_name: 's2s(两个地址)' }
+    ]
 
     export default {
         name: 'table_demo',
@@ -124,7 +164,8 @@
                     limit: 10,
                     search: {
                         appId_eq: undefined,
-                        mediaId_eq: undefined
+                        mediaId_eq: undefined,
+                        reportType_eq: undefined
                     }
                 },
                 tableKey: 0,
@@ -141,7 +182,9 @@
                 appIdOptions: [],
                 appIdOptionsWithoutAll: [],
                 leagueIdOptions: [],
-                leagueIdOptionsWithoutAll: []
+                leagueIdOptionsWithoutAll: [],
+                reportTypeOptions,
+                reportTypeOptionsWithoutAll
             }
         },
         created() {
@@ -233,7 +276,8 @@
             // 添加
             handleCreate() {
                 this.temp = {
-                    leagueId: undefined
+                    leagueId: undefined,
+                    reportType: 1
                 }
                 this.dialogStatus = 'create';
                 this.dialogFormVisible = true;
