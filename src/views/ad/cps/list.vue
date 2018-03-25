@@ -3,8 +3,6 @@
 
         <!-- 搜索区域 -->
         <div class="filter-container">
-
-
             <el-select clearable class="filter-item" style="width: 130px" v-model="listQuery.search.channelId_eq" placeholder="商户" v-if="isAdminRole">
                 <el-option v-for="item in userIdOptions" :key="item.key" :label="item.display_name" :value="item.key">
                 </el-option>
@@ -17,7 +15,7 @@
 
         <div class="filter-container">
             <el-button class="filter-item" type="primary" v-waves icon="search" @click="handleFilter">搜索</el-button>
-            <el-button class="filter-item" type="primary" icon="plus" @click="handleCreate">添加</el-button>
+            <el-button class="filter-item" type="primary" icon="plus" v-if="isAdminRole" @click="handleCreate">添加</el-button>
         </div>
 
         <!-- 列表 -->
@@ -86,7 +84,7 @@
                 <template scope="scope">
                     <!--<el-button v-show='!scope.row.edit && scope.row.id!=0 && isAdminRole' type="primary" @click='scope.row.edit=true' size="small" icon="edit">编辑</el-button>-->
                     <!--<el-button v-show='scope.row.edit' type="success" @click='handleUpdate(scope.row)' size="small" icon="check">完成</el-button>-->
-                    <el-button type="success" @click='handleDelete(scope.row)' size="small" icon="check">删除</el-button>
+                    <el-button type="success" v-if="isAdminRole" @click='handleDelete(scope.row)' size="small" icon="check">删除</el-button>
                 </template>
 
             </el-table-column>
