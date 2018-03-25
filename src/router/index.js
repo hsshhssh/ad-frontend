@@ -83,6 +83,9 @@ const AppList = resolve => require(['../views/ad/app/list'], resolve);
 const MediaList = resolve => require(['../views/ad/media/list'], resolve);
 const DownloadBi = resolve => require(['../views/ad/download/bi'], resolve);
 
+/*cps*/
+const CPSList = resolve => require(['../views/ad/cps/list.vue'], resolve);
+
 Vue.use(Router);
 
  /**
@@ -268,7 +271,7 @@ export const asyncRouterMap = [
   //           { path: 'role', component: Err404, name: '角色管理' }
   //       ]
   //   },
-  {
+    {
       path: '/ad/operation',
       component: Layout,
       redirect: 'noredirect',
@@ -281,6 +284,17 @@ export const asyncRouterMap = [
           { path: 'appMedia', component: AppMediaList, name: '推广应用' },
           { path: 'download', component: DownloadBi, name: '下载管理' }
       ]
-  },
-  { path: '*', redirect: '/404', hidden: true }
+    },
+    {
+        path: '/ad/data',
+        component: Layout,
+        redirect: 'noredirect',
+        name: 'cps数据管理',
+        meta: { role: ['admin', 'cpsUser'] },
+        icon: 'tubiaoleixingzhengchang',
+        children: [
+            { path: 'user/channel', component: CPSList, name: 'cps数据', meta: { role: ['admin', 'cpsUser'] }}
+        ]
+    },
+    { path: '*', redirect: '/404', hidden: true }
 ];
