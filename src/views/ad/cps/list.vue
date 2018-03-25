@@ -125,7 +125,7 @@
                     <el-input v-model="temp.activeIncrement"></el-input>
                 </el-form-item>
 
-                <el-form-item label="新增注册新增注册量">
+                <el-form-item label="新增注册量">
                     <el-input v-model="temp.registerIncrement"></el-input>
                 </el-form-item>
 
