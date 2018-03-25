@@ -80,11 +80,11 @@
                 </template>
             </el-table-column>
 
-            <el-table-column  align="center" label="操作" width="140">
+            <el-table-column  align="center" label="操作" v-if="isAdminRole" width="140">
                 <template scope="scope">
                     <!--<el-button v-show='!scope.row.edit && scope.row.id!=0 && isAdminRole' type="primary" @click='scope.row.edit=true' size="small" icon="edit">编辑</el-button>-->
                     <!--<el-button v-show='scope.row.edit' type="success" @click='handleUpdate(scope.row)' size="small" icon="check">完成</el-button>-->
-                    <el-button type="success" v-if="isAdminRole" @click='handleDelete(scope.row)' size="small" icon="check">删除</el-button>
+                    <el-button type="success" @click='handleDelete(scope.row)' size="small" icon="check">删除</el-button>
                 </template>
 
             </el-table-column>
