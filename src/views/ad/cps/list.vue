@@ -73,12 +73,12 @@
                 </template>
             </el-table-column>
 
-            <el-table-column align="center" label="人数" width="140">
-                <template scope="scope">
-                    <el-input v-show="scope.row.edit" size="small" v-model="scope.row.peopleAmount"></el-input>
-                    <span v-show="!scope.row.edit">{{ scope.row.peopleAmount }}</span>
-                </template>
-            </el-table-column>
+            <!--<el-table-column align="center" label="人数" width="140">-->
+                <!--<template scope="scope">-->
+                    <!--<el-input v-show="scope.row.edit" size="small" v-model="scope.row.peopleAmount"></el-input>-->
+                    <!--<span v-show="!scope.row.edit">{{ scope.row.peopleAmount }}</span>-->
+                <!--</template>-->
+            <!--</el-table-column>-->
 
             <el-table-column  align="center" label="操作" v-if="isAdminRole" width="140">
                 <template scope="scope">
@@ -131,9 +131,9 @@
                     <el-input v-model="temp.rechargeAmount"></el-input>
                 </el-form-item>
 
-                <el-form-item label="人数">
-                    <el-input v-model="temp.peopleAmount"></el-input>
-                </el-form-item>
+                <!--<el-form-item label="人数">-->
+                    <!--<el-input v-model="temp.peopleAmount"></el-input>-->
+                <!--</el-form-item>-->
 
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -393,6 +393,7 @@
 
                 // 处理统计时间
                 this.temp.statisticsDate = Date.parse(this.temp.jsStatisticsDate)/1000;
+                this.temp.peopleAmount = 0;
 
                 dataCreate(this.temp).then(response => {
                     if (response.data === 1) {
