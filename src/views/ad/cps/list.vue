@@ -128,6 +128,10 @@
                     <el-input v-model="temp.appName"></el-input>
                 </el-form-item>
 
+                <el-form-item label="链接Id">
+                    <el-input v-model="temp.linkId"></el-input>
+                </el-form-item>
+
                 <el-form-item label="点击量">
                     <el-input v-model="temp.clickAmount"></el-input>
                 </el-form-item>
