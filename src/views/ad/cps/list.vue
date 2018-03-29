@@ -8,6 +8,12 @@
                 </el-option>
             </el-select>
 
+            <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="游戏名称" v-model="listQuery.search.appName_like">
+            </el-input>
+
+            <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="链接id" v-model="listQuery.search.linkId_eq">
+            </el-input>
+
             <el-date-picker clearable class="filter-item" v-model="listTimeRange" type="datetimerange" :picker-options="pickerOptions2" placeholder="统计时间" align="right">
             </el-date-picker>
         </div>
@@ -45,6 +51,13 @@
                 </template>
             </el-table-column>
 
+            <el-table-column align="center" label="链接id" width="140">
+                <template scope="scope">
+                    <el-input v-show="scope.row.edit" size="small" v-model="scope.row.linkId"></el-input>
+                    <span v-show="!scope.row.edit">{{ scope.row.linkId }}</span>
+                </template>
+            </el-table-column>
+
             <el-table-column align="center" label="点击量" width="140">
                 <template scope="scope">
                     <el-input v-show="scope.row.edit" size="small" v-model="scope.row.clickAmount"></el-input>
@@ -52,10 +65,10 @@
                 </template>
             </el-table-column>
 
-            <el-table-column align="center" label="新增激活量" width="140">
+            <el-table-column align="center" label="新增点击量" width="140">
                 <template scope="scope">
-                    <el-input v-show="scope.row.edit" size="small" v-model="scope.row.activeIncrement"></el-input>
-                    <span v-show="!scope.row.edit">{{ scope.row.activeIncrement }}</span>
+                    <el-input v-show="scope.row.edit" size="small" v-model="scope.row.clickIncrement"></el-input>
+                    <span v-show="!scope.row.edit">{{ scope.row.clickIncrement }}</span>
                 </template>
             </el-table-column>
 
@@ -84,7 +97,7 @@
                 <template scope="scope">
                     <!--<el-button v-show='!scope.row.edit && scope.row.id!=0 && isAdminRole' type="primary" @click='scope.row.edit=true' size="small" icon="edit">编辑</el-button>-->
                     <!--<el-button v-show='scope.row.edit' type="success" @click='handleUpdate(scope.row)' size="small" icon="check">完成</el-button>-->
-                    <el-button type="success" @click='handleDelete(scope.row)' size="small" icon="check">删除</el-button>
+                    <el-button type="success" v-show="scope.row.id > 0" @click='handleDelete(scope.row)' size="small" icon="check">删除</el-button>
                 </template>
 
             </el-table-column>
@@ -120,7 +133,7 @@
                 </el-form-item>
 
                 <el-form-item label="新增点击量">
-                    <el-input v-model="temp.activeIncrement"></el-input>
+                    <el-input v-model="temp.clickIncrement"></el-input>
                 </el-form-item>
 
                 <el-form-item label="新增注册量">
@@ -302,8 +315,23 @@
 
 
                 dataList(search, page, size).then(response => {
-                    this.list = response.data.list
-                    this.total = response.data.total
+                    var list = response.data.pageVO.list
+                    var total = response.data.pageVO.total
+
+                    var totalVO = response.data.totalVO;
+                    list.push({id:0})
+                    list.push({
+                        id: 0,
+                        linkId: "汇总",
+                        clickAmount: totalVO.clickAmount,
+                        clickIncrement: totalVO.clickIncrement,
+                        registerIncrement: totalVO.registerIncrement,
+                        rechargeAmount: totalVO.rechargeAmount,
+                        peopleAmount: totalVO.peopleAmount
+                    });
+
+                    this.list = list;
+                    this.total = total;
                     this.listLoading = false;
                 })
 
