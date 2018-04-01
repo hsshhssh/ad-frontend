@@ -24,6 +24,11 @@
 
             <el-date-picker clearable class="filter-item" v-model="jsSettlementTime" type="month" :picker-options="datePickerOptions" placeholder="结算月份" align="right">
             </el-date-picker>
+
+            <el-select clearable class="filter-item" style="width: 130px" v-model="listQuery.search.isConfirm_eq" placeholder="已结算" filterable >
+                <el-option v-for="item in isSettlementOptions" :key="item.key" :label="item.display_name" :value="item.key">
+                </el-option>
+            </el-select>
         </div>
 
 
@@ -211,6 +216,12 @@
 
     }
 
+    const isSettlementOptions = [
+        { key: null, display_name: '全部' },
+        { key: '0', display_name: '未结算' },
+        { key: '1', display_name: '已结算' }
+    ]
+
     export default {
         name: 'table_demo',
         data() {
@@ -229,7 +240,7 @@
                     page: 1,
                     limit: 10,
                     search: {
-                        channelId_eq: undefined
+                        isConfirm_eq: undefined
                     }
                 },
                 tableKey: 0,
@@ -255,6 +266,8 @@
                 leagueIdOptionsWithoutAll: [],
                 appMediaIdOptions: [],
                 appMediaIdOptionsWithoutAll: [],
+                isSettlementOptions,
+                isSettlement: undefined
             }
         },
         created() {
@@ -293,9 +306,8 @@
                 } else {
                     search.putTime_eq = undefined;
                 }
-
                 if (this.jsSettlementTime != '') {
-                    search.settlementTime_eq = Date.parse(this.jsSettlementTime/1000);
+                    search.settlementTime_eq = Date.parse(this.jsSettlementTime)/1000;
                 } else {
                     search.settlementTime_eq = undefined;
                 }
@@ -392,7 +404,14 @@
 
             // 编辑
             handleUpdate(row) {
-                row.jsSettlementTime = new Date(row.settlementTime * 1000)
+                if (row.settlementTime == 0) {
+                    var date = new Date();
+                    date.setDate(1);date.setHours(0, 0, 0, 0);
+                    console.log(date.getTime());
+                    row.jsSettlementTime = new Date(date.getTime());
+                } else {
+                    row.jsSettlementTime = new Date(row.settlementTime * 1000)
+                }
                 row.edit = true;
             },
             cancelUpdate(row) {
@@ -403,7 +422,6 @@
                 if (row.jsSettlementTime != undefined && row.jsSettlementTime != '') {
                     row.settlementTime = Date.parse(row.jsSettlementTime) / 1000
                 }
-                console.log(row)
                 monthSettlementUpdate(row).then(response => {
                     if (response.data === 1) {
                         Message({
