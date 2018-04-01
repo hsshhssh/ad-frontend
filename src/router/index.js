@@ -82,6 +82,7 @@ const AppMediaList = resolve => require(['../views/ad/appMedia/list'], resolve);
 const AppList = resolve => require(['../views/ad/app/list'], resolve);
 const MediaList = resolve => require(['../views/ad/media/list'], resolve);
 const DownloadBi = resolve => require(['../views/ad/download/bi'], resolve);
+const MonthSettlement = resolve => require(['../views/ad/settlement/month_list'], resolve);
 
 /*cps*/
 const CPSList = resolve => require(['../views/ad/cps/list.vue'], resolve);
@@ -282,7 +283,8 @@ export const asyncRouterMap = [
           { path: 'app', component: AppList, name: '应用管理' },
           { path: 'media', component: MediaList, name: '媒体管理' },
           { path: 'appMedia', component: AppMediaList, name: '推广应用' },
-          { path: 'download', component: DownloadBi, name: '下载管理' }
+          { path: 'download', component: DownloadBi, name: '下载管理' },
+          { path: 'settlement/month', component: MonthSettlement, name: '月结算数据' }
       ]
     },
     {

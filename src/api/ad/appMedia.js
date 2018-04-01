@@ -18,6 +18,19 @@ export function appMediaList(search, page, size) {
     })
 }
 
+export function appMediaListNoPage() {
+    let params = new FormData()
+    params.append('search', '{}')
+    params.append('page', 1)
+    params.append('size', 1000)
+    return fetch({
+        url: '/xqh/ad/appMedia/search',
+        method: 'post',
+        data: params,
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    })
+}
+
 export function appMediaCreate(body) {
     const bodyCopy = deepCoyp(body)
     return fetch({
